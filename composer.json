@@ -1,0 +1,26 @@
+
+{
+  "name": "nebo15/eloquent.changelog",
+  "description": "Eloquent changelog",
+  "keywords": ["Laravel", "Eloquent", "changelog"],
+  "authors": [
+    {
+      "name": "Paul Bardack",
+      "homepage": "http://paulbardack.com"
+    }
+  ],
+  "license" : "MIT",
+  "require": {
+    "jenssegers/mongodb": "2.*"
+  },
+  "require-dev": {
+    "illuminate/database": "5.2.*",
+    "squizlabs/php_codesniffer": "2.*"
+  },
+  "autoload": {
+    "psr-4": { "Nebo15\\Changelog\\": "src" }
+  },
+  "version": "0.0.1",
+  "minimum-stability": "dev"
+}
+
