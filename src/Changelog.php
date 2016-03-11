@@ -17,11 +17,23 @@ class Changelog extends \Jenssegers\Mongodb\Model
 {
     protected $fillable = ['author', 'model'];
 
+    public static function find($table, $model_id)
+    {
+        return self::where([
+            'model._id' => $model_id,
+            'model.table' => $table,
+        ])->firstOrFail();
+    }
+
     public static function createFromModel(Model $model, $author)
     {
         return self::create([
             'author' => $author,
-            'model' => $model->getAttributes()
+            'model' => [
+                '_id' => $model->_id,
+                'table' => $model->getTable(),
+                'attributes' => $model->getAttributes()
+            ]
         ]);
     }
 }
