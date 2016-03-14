@@ -11,6 +11,7 @@
   ],
   "license" : "MIT",
   "require": {
+    "nebo15/lumen.rest": "*",
     "jenssegers/mongodb": "2.*"
   },
   "require-dev": {

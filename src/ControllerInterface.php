@@ -7,12 +7,16 @@
 
 namespace Nebo15\Changelog;
 
+use Nebo15\REST\Response;
+use \Illuminate\Http\Request;
 
 interface ControllerInterface
 {
-    public function __construct(\Illuminate\Http\Request $request, \Illuminate\Http\Response $response);
+    public function __construct(Request $request, Response $response, Changelog $changelogModel);
 
-    public function all($table, $model_id);
+    public function all($table);
+
+    public function allWithId($table, $model_id);
 
     public function diff($table, $model_id);
 

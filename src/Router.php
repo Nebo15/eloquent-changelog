@@ -20,10 +20,15 @@ class Router
 
     public function api($api_prefix = '', array $middleware = [], $controller_name = null)
     {
-        $controller_name = $controller_name ?: 'Nebo15\Changelog\Controller';
+        $controller_name = $controller_name ?: '\Nebo15\Changelog\Controller';
+
+        $this->app->get("$api_prefix/changelog/{table}", [
+            "uses" => "$controller_name@all",
+            'middleware' => $middleware
+        ]);
 
         $this->app->get("$api_prefix/changelog/{table}/{model_id}", [
-            "uses" => "$controller_name@all",
+            "uses" => "$controller_name@allWithId",
             'middleware' => $middleware
         ]);
 
