@@ -89,6 +89,7 @@ class Changelog extends \Jenssegers\Mongodb\Model
         /** @var \Illuminate\Pagination\LengthAwarePaginator $paginator */
         $paginator = self::where($where)
             ->orderBy('model.table')
+            ->orderBy(self::CREATED_AT, 'DESC')
             ->paginate($perPage, ['author', 'model._id', 'model.table', self::CREATED_AT, self::UPDATED_AT]);
         if ($paginator->count() == 0) {
             throw (new ModelNotFoundException)->setModel(get_class($this));
