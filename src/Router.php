@@ -37,7 +37,7 @@ class Router
             'middleware' => $middleware
         ]);
 
-        $this->app->get("/$api_prefix/changelog/{table}/{model_id}/rollback/{changelog_id}", [
+        $this->app->post("/$api_prefix/changelog/{table}/{model_id}/rollback/{changelog_id}", [
             "uses" => "$controller_name@rollback",
             'middleware' => $middleware
         ]);
