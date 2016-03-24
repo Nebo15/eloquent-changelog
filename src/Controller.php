@@ -9,6 +9,7 @@ namespace Nebo15\Changelog;
 
 use Nebo15\REST\Response;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\Validation\ValidationException;
 
 class Controller extends \Laravel\Lumen\Routing\Controller implements ControllerInterface
 {
@@ -61,5 +62,10 @@ class Controller extends \Laravel\Lumen\Routing\Controller implements Controller
         return $this->response->json(
             $this->changelogModel->rollback($table, $model_id, $changelog_id)
         );
+    }
+
+    protected function throwValidationException(Request $request, $validator)
+    {
+        throw new ValidationException($validator);
     }
 }
