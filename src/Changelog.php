@@ -27,6 +27,8 @@ class Changelog extends \Jenssegers\Mongodb\Model
 
     protected $perPage = 20;
 
+    protected $dateFormat = "Y-m-d\TH:i:sO";
+
     public static function createFromModel(Model $model, $author)
     {
         return self::create([
