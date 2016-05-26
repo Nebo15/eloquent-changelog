@@ -46,11 +46,13 @@ class Changelog extends \Jenssegers\Mongodb\Model
      * @param $id
      * @param null $table
      * @param null $model_id
+     * @param array $where
      * @return Changelog
      */
-    public function findById($id, $table = null, $model_id = null)
+    public function findById($id, $table = null, $model_id = null, $where = [])
     {
-        $where = [$this->getKeyName() => $id];
+
+        $where[$this->getKeyName()] = $id;
         if ($table) {
             $where['model.table'] = $table;
         }
@@ -64,26 +66,28 @@ class Changelog extends \Jenssegers\Mongodb\Model
     /**
      * @param $table
      * @param $model_id
+     * @param $where
      * @return Changelog
      */
-    public function findFirst($table, $model_id)
+    public function findFirst($table, $model_id, $where = [])
     {
-        return self::where([
-            'model._id' => $model_id,
-            'model.table' => $table,
-        ])->orderBy('created_at', 'DESC')->firstOrFail();
+        $where['model._id'] = $model_id;
+        $where['model.table'] = $table;
+        return self::where($where)->orderBy('created_at', 'DESC')->firstOrFail();
     }
 
     /**
      * @param $table
      * @param $model_id
      * @param null $perPage
+     * @param array $where
      * @return \Illuminate\Pagination\LengthAwarePaginator
      * @throws ModelNotFoundException
      */
-    public function findAll($table, $model_id, $perPage = null)
+    public function findAll($table, $model_id, $perPage = null, $where = [])
     {
-        $where = ['model.table' => $table];
+
+        $where['model.table'] = $table;
         if ($model_id) {
             $where['model._id'] = $model_id;
         }
@@ -100,19 +104,19 @@ class Changelog extends \Jenssegers\Mongodb\Model
         return $paginator;
     }
 
-    public function diff($table, $model_id, $compareWithId, $originalId = null)
+    public function diff($table, $model_id, $compareWithId, $originalId = null, $where = [])
     {
-        $original = $originalId ? $this->findById($originalId, $table, $model_id) : $this->findFirst($table, $model_id);
+        $original = $originalId ? $this->findById($originalId, $table, $model_id, $where) : $this->findFirst($table, $model_id, $where);
 
         return [
             'original' => $original->toArray(),
-            'compare_with' => $this->findById($compareWithId, $table, $model_id)->toArray(),
+            'compare_with' => $this->findById($compareWithId, $table, $model_id, $where)->toArray(),
         ];
     }
 
-    public function rollback($table, $model_id, $changelogId)
+    public function rollback($table, $model_id, $changelogId, $where = [])
     {
-        $changelog = $this->findById($changelogId, $table, $model_id);
+        $changelog = $this->findById($changelogId, $table, $model_id, $where);
 
 
         $result = $changelog->getModelClassById(strval($changelog->model['_id']))
