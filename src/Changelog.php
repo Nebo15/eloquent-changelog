@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
  * Class Changelog
  * @package Nebo15\Changelog
  */
-class Changelog extends \Jenssegers\Mongodb\Model
+class Changelog extends \Jenssegers\Mongodb\Eloquent\Model
 {
     use ListableTrait;
 
