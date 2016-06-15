@@ -7,6 +7,7 @@
  */
 namespace Nebo15\Changelog;
 
+use MongoDB\BSON\ObjectID;
 use Nebo15\REST\Traits\ListableTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -34,7 +35,7 @@ class Changelog extends \Jenssegers\Mongodb\Eloquent\Model
         return self::create([
             'author' => $author,
             'model' => [
-                '_id' => new \MongoDB\BSON\ObjectId($model->{$model->getKeyName()}),
+                '_id' => new ObjectID($model->{$model->getKeyName()}),
                 'class' => get_class($model),
                 'table' => $model->getTable(),
                 'attributes' => $model->getAttributes()
