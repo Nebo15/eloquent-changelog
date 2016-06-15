@@ -34,7 +34,7 @@ class Changelog extends \Jenssegers\Mongodb\Eloquent\Model
         return self::create([
             'author' => $author,
             'model' => [
-                '_id' => new \MongoId($model->{$model->getKeyName()}),
+                '_id' => new \MongoDB\BSON\ObjectId($model->{$model->getKeyName()}),
                 'class' => get_class($model),
                 'table' => $model->getTable(),
                 'attributes' => $model->getAttributes()
